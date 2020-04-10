@@ -34,7 +34,8 @@ namespace Eventos
 
         private void QuandoExcederDecibeis(Object sender, EventArgs e)
         {
-            MessageBox.Show("O animal passou dos limites", "Excesso de decibéis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            ExcessoDecibeisEventArgs eventArgs = (ExcessoDecibeisEventArgs)e; 
+            MessageBox.Show(string.Format("O animal passou dos limites, com {0} decibéis. ", eventArgs.IntensidadeLatido), "Excesso de decibéis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void QuandoExcederDecibeisNovamente(Object sender, EventArgs e)

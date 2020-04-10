@@ -9,8 +9,7 @@ namespace Eventos
     public class GerenciadorLatidos
     {
         private int _intesidadeLatido;
-        public delegate void ExcessoDecibeisHandler(object sender, EventArgs e);
-        public event ExcessoDecibeisHandler ExcessoDecibeisEvent;
+        public event EventHandler ExcessoDecibeisEvent;
 
         public GerenciadorLatidos()
         {
@@ -22,7 +21,11 @@ namespace Eventos
             _intesidadeLatido += 10;
             if (_intesidadeLatido > 80)
             {
-                OnExcessoDecibeis(new EventArgs());
+                ExcessoDecibeisEventArgs e = new ExcessoDecibeisEventArgs
+                {
+                    IntensidadeLatido = _intesidadeLatido
+                };
+                OnExcessoDecibeis(e);
             }
             return _intesidadeLatido;
         }
