@@ -18,8 +18,15 @@ namespace Eventos
         {
             InitializeComponent();
             _gerenciadorLatidos = new GerenciadorLatidos();
-            _gerenciadorLatidos.ExcessoDecibeisEvent += QuandoExcederDecibeis;
-            _gerenciadorLatidos.ExcessoDecibeisEvent += QuandoExcederDecibeisNovamente;
+            _gerenciadorLatidos.ExcessoDecibeisEvent += (sender, args) =>
+            {
+                ExcessoDecibeisEventArgs eventArgs = (ExcessoDecibeisEventArgs)args;
+                MessageBox.Show(string.Format("O animal passou dos limites, com {0} decibéis. ", eventArgs.IntensidadeLatido), "Excesso de decibéis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            };
+            _gerenciadorLatidos.ExcessoDecibeisEvent += (sender, args) => 
+            {
+                MessageBox.Show("Você receberá uma multa", "Excesso de decibéis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            };
         }
 
         private void frmGerenciadorLatidosCachorros_Load(object sender, EventArgs e)
@@ -31,16 +38,6 @@ namespace Eventos
         {
             pgbIntensidadeLatido.Value = _gerenciadorLatidos.Latir(); 
         }
-
-        private void QuandoExcederDecibeis(Object sender, EventArgs e)
-        {
-            ExcessoDecibeisEventArgs eventArgs = (ExcessoDecibeisEventArgs)e; 
-            MessageBox.Show(string.Format("O animal passou dos limites, com {0} decibéis. ", eventArgs.IntensidadeLatido), "Excesso de decibéis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-
-        private void QuandoExcederDecibeisNovamente(Object sender, EventArgs e)
-        {
-            MessageBox.Show("Você receberá uma multa", "Excesso de decibéis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
+        
     }
 }
