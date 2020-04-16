@@ -12,9 +12,11 @@ namespace LINQ
         {
             List<Person> people = LoadPersonList();
             // 1 - People with more than two brothers
-            var peopleMoreThenTwoBrothers = from person in people
-                                            where person.NumberOfBrothers > 2
-                                            select person;
+            //var peopleMoreThenTwoBrothers = from person in people
+            //                                where person.NumberOfBrothers > 2
+            //                                select person;
+
+            IEnumerable<Person> peopleMoreThenTwoBrothers = people.Where(x => x.NumberOfBrothers > 3);
 
             foreach (Person p in peopleMoreThenTwoBrothers)
             {
@@ -22,10 +24,16 @@ namespace LINQ
             }
             Console.WriteLine("########################################################");
             // 2 -  Name and Age of all persons of legal age
-            var peopleLegalAge = from person in people
-                                 where person.Age > 18
-                                 orderby person.Age
-                                 select new { person.Name, person.Age };
+            //var peopleLegalAge = from person in people
+            //                     where person.Age > 18
+            //                     orderby person.Age
+            //                     select new { person.Name, person.Age };
+
+            var peopleLegalAge = people.Where(x => x.Age > 18)
+                                       .OrderByDescending(x => x.Name.Length)
+                                       .ThenBy(x => x.Age)
+                                       .Select(x => new { x.Name, x.Age });
+
             foreach (var person in peopleLegalAge)
             {
                 Console.WriteLine("{0}, {1} ", person.Name, person.Age);
